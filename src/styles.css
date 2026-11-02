@@ -1,0 +1,514 @@
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --border: #d9dce1;
+  --text: #1f2328;
+  --muted: #667085;
+  --accent: #2f6fde;
+  --accent-soft: #e6eefc;
+  --danger: #c4320a;
+  --pdf: #d93025;
+  --sheet: #1e7e45;
+  --doc: #2b5cc8;
+  --slides: #d4651c;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: var(--text);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Araç çubukları */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.toolbar.main {
+  padding: 8px 12px;
+}
+
+.toolbar.sub {
+  background: #fafbfc;
+}
+
+.brand {
+  font-weight: 700;
+  margin-right: 12px;
+  letter-spacing: -0.01em;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 6px;
+}
+
+.tool {
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  min-width: 30px;
+  line-height: 20px;
+}
+
+.tool:hover:not(:disabled) {
+  background: #eef0f3;
+}
+
+.tool.active {
+  background: var(--accent-soft);
+  border-color: #bcd0f7;
+  color: var(--accent);
+}
+
+.tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.toolbar select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 6px;
+  background: var(--surface);
+}
+
+.tool.color {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.tool.color input {
+  width: 22px;
+  height: 22px;
+  border: none;
+  padding: 0;
+  margin-left: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.zoom-label {
+  min-width: 44px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.status {
+  color: var(--muted);
+  margin-left: 12px;
+  max-width: 50ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 12px;
+}
+
+.pad {
+  padding: 24px;
+}
+
+/* Sekmeler */
+.tabs {
+  display: flex;
+  gap: 2px;
+  padding: 6px 8px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 10px;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  max-width: 260px;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background: #e8eaee;
+}
+
+.tab.active {
+  background: var(--surface);
+  border-color: var(--border);
+  margin-bottom: -1px;
+}
+
+.tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dirty {
+  color: var(--accent);
+  font-size: 10px;
+}
+
+.tab-close {
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  line-height: 18px;
+  color: var(--muted);
+}
+
+.tab-close:hover {
+  background: #dfe2e7;
+  color: var(--text);
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.badge-pdf { background: var(--pdf); }
+.badge-sheet { background: var(--sheet); }
+.badge-doc { background: var(--doc); }
+.badge-slides { background: var(--slides); }
+
+/* Çalışma alanı */
+.workspace {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: var(--surface);
+}
+
+.editor-pane,
+.editor-fill,
+.pdf-editor,
+.doc-editor,
+.slide-viewer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.editor-error,
+.editor-note {
+  padding: 8px 14px;
+  background: #fef3f2;
+  color: var(--danger);
+  border-bottom: 1px solid #fcd5d0;
+}
+
+.editor-note {
+  background: #fffaeb;
+  color: #93370d;
+  border-color: #fedf89;
+}
+
+/* Hoş geldin ekranı */
+.welcome {
+  max-width: 520px;
+  margin: 12vh auto 0;
+  text-align: center;
+  padding: 0 16px;
+}
+
+.welcome h1 {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 15px;
+  cursor: pointer;
+  margin: 12px 0 4px;
+}
+
+.primary:hover {
+  background: #2560c4;
+}
+
+.formats {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.formats li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drag-over .workspace {
+  outline: 3px dashed var(--accent);
+  outline-offset: -12px;
+}
+
+.drop-hint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+/* Excel */
+.univer-host {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Word */
+.doc-scroll {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg);
+  padding: 24px 16px 64px;
+}
+
+.doc-page {
+  background: var(--surface);
+  max-width: 816px;
+  min-height: 1056px;
+  margin: 0 auto;
+  padding: 72px 80px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12), 0 1px 2px rgba(16, 24, 40, 0.06);
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size: 11pt;
+  line-height: 1.5;
+}
+
+.doc-page .tiptap {
+  outline: none;
+  min-height: 900px;
+}
+
+.doc-page .tiptap p {
+  margin: 0 0 8px;
+}
+
+.doc-page .tiptap img {
+  max-width: 100%;
+}
+
+.doc-page .tiptap table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+  table-layout: fixed;
+}
+
+.doc-page .tiptap td,
+.doc-page .tiptap th {
+  border: 1px solid #9aa1ab;
+  padding: 4px 6px;
+  vertical-align: top;
+  position: relative;
+}
+
+.doc-page .tiptap th {
+  background: #f2f4f7;
+}
+
+.doc-page .tiptap .selectedCell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(47, 111, 222, 0.15);
+  pointer-events: none;
+}
+
+.doc-page .tiptap .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.doc-page .tiptap.resize-cursor {
+  cursor: col-resize;
+}
+
+/* PDF */
+.pdf-scroll {
+  flex: 1;
+  overflow: auto;
+  background: #5f6368;
+  padding: 16px;
+}
+
+.pdf-page {
+  position: relative;
+  margin: 0 auto 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.pdf-page canvas {
+  display: block;
+}
+
+.annot-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.annot-layer.tool-text,
+.annot-layer.tool-highlight {
+  pointer-events: auto;
+}
+
+.annot-layer.tool-text {
+  cursor: text;
+}
+
+.annot-layer.tool-highlight {
+  cursor: crosshair;
+}
+
+.annot {
+  position: absolute;
+  pointer-events: auto;
+}
+
+.annot-highlight {
+  background: rgba(255, 222, 0, 0.4);
+  mix-blend-mode: multiply;
+}
+
+.annot-highlight.draft {
+  outline: 1px dashed #b38f00;
+}
+
+.annot-text {
+  min-width: 8px;
+  padding: 0;
+  outline: 1px dashed transparent;
+  white-space: pre;
+}
+
+.annot-text:hover,
+.annot-text:focus {
+  outline-color: var(--accent);
+}
+
+.annot-del {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: var(--danger);
+  color: #fff;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0;
+  cursor: pointer;
+  display: none;
+}
+
+.annot:hover .annot-del,
+.annot:focus-within .annot-del {
+  display: block;
+}
+
+/* Sunum */
+.slide-host {
+  flex: 1;
+  overflow: auto;
+  background: var(--bg);
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
